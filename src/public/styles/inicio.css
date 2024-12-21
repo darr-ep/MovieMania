@@ -1,0 +1,343 @@
+@import url("https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&family=Squada+One&display=swap");
+
+:root {
+  --primary-color: #a51414;
+  --secondary-color: #a54b4b;
+  --tertiary-color: #c93b3b;
+  --light-color: #f0f0f0;
+  --dark-color: #3c0f0f;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Epilogue, sans-serif;
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+span {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  background-color: var(--light-color);
+}
+
+.contenido {
+  display: grid;
+  grid-template-areas: "informacion" "header" "main" "footer";
+  grid-template-rows: auto auto 1fr auto;
+  width: 100%;
+  height: 100dvh;
+  overflow-y: auto;
+}
+
+.informacion {
+  background-color: var(--dark-color);
+  grid-area: informacion;
+}
+
+header {
+  background-color: var(--light-color);
+  display: flex;
+  justify-content: center;
+}
+
+nav {
+  width: 1200px;
+  color: white;
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+  justify-content: space-between;
+}
+
+header .logo {
+  height: 60px;
+}
+
+nav ul {
+  grid-area: nav;
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+main {
+  grid-area: main;
+  display: grid;
+  grid-template-areas: "inicio" "guardadas" "proximamente" "populares";
+  position: relative;
+  gap: 50px;
+  margin-bottom: 50px;
+}
+
+footer {
+  background-color: rgb(61, 136, 139);
+  grid-area: footer;
+}
+
+.inicio {
+  width: 100%;
+  background-color: var(--dark-color);
+  grid-area: inicio;
+  display: flex;
+  justify-content: center;
+}
+
+.inicio__contenido {
+  padding: 50px;
+  width: 600px;
+  height: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.inicio .titulo {
+  font-family: "Squada One", cursive;
+  font-weight: 400;
+  font-size: 6rem;
+}
+
+/*!   REVISAR   */
+/* .imagenes {
+    position: absolute;
+}
+
+.imagenes img {
+    width: auto;
+    height: 150px;
+} */
+
+.guardadas {
+  grid-area: guardadas;
+  text-align: center;
+  align-items: center;
+  width: auto;
+  padding: 0 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+h2 {
+  color: var(--primary-color);
+  font-size: 2rem;
+}
+
+h3 {
+  color: var(--tertiary-color);
+  font-size: 1.3rem;
+}
+
+.guardadas__botones {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.guardadas__contenido {
+  width: 1200px;
+  display: grid;
+  grid-template-areas: "favoritas" "pendientes";
+  grid-template-rows: 1fr 1fr;
+  justify-content: center;
+  gap: 10px;
+}
+
+.guardadas__contenido > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.favoritas {
+  grid-area: favoritas;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pendientes {
+  grid-area: pendientes;
+  background-color: rgb(0, 255, 0);
+}
+
+.guardadas__tarjetas {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.guardadas__tarjeta {
+  background-color: white;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  padding: 20px;
+  flex-direction: column;
+  width: 400px;
+  border: 2px solid var(--dark-color);
+  border-radius: 20px;
+  text-align: start;
+  gap: 14px;
+  height: 600px;
+}
+
+.guardadas__tarjeta--imagen {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.guardadas__tarjeta--detalles {
+  display: flex;
+  justify-content: space-between;
+}
+
+.guardadas__tarjeta--titulo {
+  color: var(--primary-color);
+}
+
+.guardadas__tarjeta--calificacion {
+  color: var(--primary-color);
+}
+
+.guardadas__tarjeta--descripcion {
+  color: var(--dark-color);
+  text-align: start;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.guardadas__tarjeta--boton {
+  display: block;
+}
+
+.proximamente {
+  grid-area: proximamente;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 0 50px;
+}
+
+.proximamente__peliculas {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.proximamente__pelicula {
+  position: relative;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.proximamente__pelicula--informacion {
+  position: absolute;
+  background-color: #000000b7;
+  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.proximamente__pelicula--titulo {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+.proximamente__pelicula img {
+  border-radius: 20px;
+  width: 280px;
+  height: 280px;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.proximamente__pelicula:hover {
+  transform: scale(1.1);
+}
+
+.proximamente__pelicula:hover .proximamente__pelicula--informacion {
+  opacity: 1;
+}
+
+.populares {
+  grid-area: populares;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 0 50px;
+}
+
+.populares__peliculas {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+}
+
+.populares__pelicula {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.populares__pelicula img {
+  border-radius: 50%;
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.populares__pelicula--titulo {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+
+.populares__pelicula--grande img {
+  border-radius: 50%;
+  width: 280px;
+  height: 280px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.boton__1 {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.boton__2 {
+  color: var(--primary-color);
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}

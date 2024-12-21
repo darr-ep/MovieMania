@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/inicio.css">
+</head>
+
+<body>
+    <div class="contenido">
+        <section class="informacion">
+            Informacion
+        </section>
+        <header>
+            <nav>
+                <img class="logo" src="images/logo/Logo-black.png" alt="">
+                <ul>
+                    <li><button class="boton__1" type="button">Iniciar Sesión</button></li>
+                    <li><button class="boton__1" type="button">Registro</button></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="inicio">
+                <div class="inicio__contenido">
+                    <h1 class="titulo">MovieMania</h1>
+                    <p>Tu guía confiable para descubrir, explorar y disfrutar de las mejores películas y series</p>
+                    <button class="boton__1" type="button">Ver más</button>
+                </div>
+            </section>
+            <!--!   REVISAR   -->
+            <!-- <section class="imagenes">
+                <img src="images/Prueba.png" alt="">
+                <img src="images/Prueba.png" alt="">
+                <img src="images/Prueba.png" alt="">
+            </section> -->
+            <section class="guardadas">
+                <h2>Guardadas</h2>
+                <div class="guardadas__contenido">
+                    <div class="favoritas">
+                        <h3>Favoritas</h3>
+                        <div class="guardadas__tarjetas">
+                            <div class="guardadas__tarjeta">
+                                <img class="guardadas__tarjeta--imagen" class="" src="images/Prueba.png" alt="">
+                                <div class="guardadas__tarjeta--detalles">
+                                    <span class="guardadas__tarjeta--titulo">Prueba</span>
+                                    <span class="guardadas__tarjeta--calificacion">4.5/5</span>
+                                </div>
+                                <p class="guardadas__tarjeta--descripcion">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur corporis voluptatum nemo ea debitis earum suscipit magni inventore rerum ad? Impedit magni excepturi cupiditate eligendi minus iusto beatae maxime animi.
+                                </p>
+                                <button class="boton__1 guardadas__tarjeta--boton" type="button">Detalles</button>
+                            </div>
+                            <div class="guardadas__tarjeta">
+                                <img class="guardadas__tarjeta--imagen" class="" src="images/Prueba.png" alt="">
+                                <div class="guardadas__tarjeta--detalles">
+                                    <span class="guardadas__tarjeta--titulo">Prueba</span>
+                                    <span class="guardadas__tarjeta--calificacion">4.5/5</span>
+                                </div>
+                                <p class="guardadas__tarjeta--descripcion">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur corporis voluptatum nemo ea debitis earum suscipit magni inventore rerum ad? Impedit magni excepturi cupiditate eligendi minus iusto beatae maxime animi.
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur corporis voluptatum nemo ea debitis earum suscipit magni inventore rerum ad? Impedit magni excepturi cupiditate eligendi minus iusto beatae maxime animi.
+                                    <br>m ipsum dolor sit, amet consectetur adipisicing elit. Tenetur corporis voluptatum nemo ea debitis earum suscipit magni inventore rerum ad? Impedit magni excepturi cupiditate eligendi minus iusto beatae maxime animi.
+                                    <br>m ipsum dolor sit, amet consectetur adipisicing elit. Tenetur corporis voluptatum nemo ea debitis earum suscipit magni inventore rerum ad? Impedit magni excepturi cupiditate eligendi minus iusto beatae maxime animi.
+                                    <br>
+                                </p>
+                                <button class="boton__1 guardadas__tarjeta--boton" type="button">Detalles</button>
+                            </div>
+                            <div class="guardadas__tarjeta">
+                                <img class="guardadas__tarjeta--imagen" class="" src="images/Prueba.png" alt="">
+                                <div class="guardadas__tarjeta--detalles">
+                                    <span class="guardadas__tarjeta--titulo">Prueba</span>
+                                    <span class="guardadas__tarjeta--calificacion">4.5/5</span>
+                                </div>
+                                <p class="guardadas__tarjeta--descripcion">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur corporis voluptatum nemo ea debitis earum suscipit magni inventore rerum ad? Impedit magni excepturi cupiditate eligendi minus iusto beatae maxime animi.
+                                </p>
+                                <button class="boton__1 guardadas__tarjeta--boton" type="button">Detalles</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pendientes">
+                        Pendientes
+                    </div>
+                </div>
+            </section>
+            <section class="proximamente">
+                <h2>Proximamente</h2>
+                <div class="proximamente__peliculas">
+                    <div class="proximamente__pelicula">
+                        <div class="proximamente__pelicula--informacion">
+                            <span class="proximamente__pelicula--titulo"><%= proximamente[0].original_title %></span>
+                        </div>
+                        <img src="https://image.tmdb.org/t/p/w500<%= proximamente[0].backdrop_path %>" alt="">
+                    </div>
+                    <div class="proximamente__pelicula">
+                        <img src="https://image.tmdb.org/t/p/w500<%= proximamente[1].backdrop_path %>" alt="">
+                    </div>
+                    <div class="proximamente__pelicula">
+                        <img src="https://image.tmdb.org/t/p/w500<%= proximamente[2].backdrop_path %>" alt="">
+                    </div>
+                    <div class="proximamente__pelicula">
+                        <img src="https://image.tmdb.org/t/p/w500<%= proximamente[3].backdrop_path %>" alt="">
+                    </div>
+                </div>
+            </section>
+    
+            <section class="populares">
+                <h2>Populares</h2>
+                <div class="populares__peliculas">
+                    <div class="populares__pelicula">
+                        <img src="https://image.tmdb.org/t/p/w500<%= popular[0].backdrop_path %>" alt="">
+                        <span class="populares__pelicula--titulo"><%= popular[0].original_title %></span>
+                        <button class="boton__2 populares__pelicula--boton" type="button">Ver más</button>
+                    </div>
+                    <div class="populares__pelicula populares__pelicula--grande">
+                        <img src="https://image.tmdb.org/t/p/w500<%= popular[1].backdrop_path %>" alt="">
+                        <span class="populares__pelicula--titulo"><%= popular[1].original_title %></span>
+                        <button class="boton__2 populares__pelicula--boton" type="button">Ver más</button>
+                    </div>
+                    <div class="populares__pelicula">
+                        <img src="https://image.tmdb.org/t/p/w500<%= popular[2].backdrop_path %>" alt="">
+                        <span class="populares__pelicula--titulo"><%= popular[2].original_title %></span>
+                        <button class="boton__2 populares__pelicula--boton" type="button">Ver más</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            Footer
+        </footer>
+    </div>
+</body>
+
+</html>
