@@ -251,15 +251,16 @@ h3 {
 
 .proximamente__pelicula--informacion {
   position: absolute;
-  background-color: #000000b7;
+  background-color: #00000088;
   border-radius: 20px;
-  width: 100%;
-  height: 100%;
+  width: 280px;
+  height: 280px;
   opacity: 0;
   transition: all 0.3s ease;
 }
 
 .proximamente__pelicula--titulo {
+    padding: 20px;
   position: absolute;
   top: 0;
   z-index: 1;

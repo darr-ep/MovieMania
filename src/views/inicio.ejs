@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>MovieMania</title>
     <link rel="stylesheet" href="styles/inicio.css">
+    <link rel="icon" href="images/logo/Logo.png" type="image/x-icon">
 </head>
 
 <body>
@@ -96,12 +97,21 @@
                         <img src="https://image.tmdb.org/t/p/w500<%= proximamente[0].backdrop_path %>" alt="">
                     </div>
                     <div class="proximamente__pelicula">
+                        <div class="proximamente__pelicula--informacion">
+                            <span class="proximamente__pelicula--titulo"><%= proximamente[1].original_title %></span>
+                        </div>
                         <img src="https://image.tmdb.org/t/p/w500<%= proximamente[1].backdrop_path %>" alt="">
                     </div>
                     <div class="proximamente__pelicula">
+                        <div class="proximamente__pelicula--informacion">
+                            <span class="proximamente__pelicula--titulo"><%= proximamente[2].original_title %></span>
+                        </div>
                         <img src="https://image.tmdb.org/t/p/w500<%= proximamente[2].backdrop_path %>" alt="">
                     </div>
                     <div class="proximamente__pelicula">
+                        <div class="proximamente__pelicula--informacion">
+                            <span class="proximamente__pelicula--titulo"><%= proximamente[3].original_title %></span>
+                        </div>
                         <img src="https://image.tmdb.org/t/p/w500<%= proximamente[3].backdrop_path %>" alt="">
                     </div>
                 </div>
