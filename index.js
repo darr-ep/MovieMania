@@ -1,9 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
-// const authRoutes = require("./routes/authRoutes");
+const authRoutes = require("./routes/authRoutes");
 const pageRoutes = require("./routes/pageRoutes");
-// const crudRoutes = require("./routes/crudRoutes");
+const movieRoutes = require("./routes/movieRoutes");
 
 const app = express();
 
@@ -23,12 +23,10 @@ app.use(
   })
 );
 
-// app.use("/auth", authRoutes);
-// app.use("/crud", crudRoutes);
 app.use("/", pageRoutes);
+app.use("/auth", authRoutes);
+app.use("/movie", movieRoutes);
 
 app.listen(process.env.PORT, () => {
-    console.log(
-      `Servidor corriendo en http://localhost:${process.env.PORT}`
-    );
-  });
+  console.log(`Servidor corriendo en http://localhost:${process.env.PORT}`);
+});

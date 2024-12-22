@@ -1,26 +1,53 @@
+const authService = require("../services/authService");
+const movieSevice = require("../services/movieService");
+
 const inicio = async (req, res) => {
-  const urlPopular = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
-  const urlUpcoming = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
+  let usuario = null;
+  let favoritos = [];
+  let pendientes = [];
+  
+  if (req.session.idUsuario) {
+    try {
+      const resultado = await authService.consultarExistenciaUsuario(req.session.idUsuario);
+      favoritos = await movieSevice.consultarPeliculasFavoritos(req.session.idUsuario);
+      pendientes = await movieSevice.consultarPeliculasPendientes(req.session.idUsuario);
+
+      if (resultado) {
+        usuario = resultado.usuario;
+      }
+    } catch (error) {
+      console.error("Error al consultar usuario:", error);
+    }
+  } else {
+    req.session.idUsuario = null;
+  }
+
+  const urlPopular = 'https://api.themoviedb.org/3/movie/popular?language=es-MX&page=1';
+  const urlUpcoming = 'https://api.themoviedb.org/3/movie/upcoming?language=es-MX&page=1';
   const options = {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization:
-        process.env.TOKEN_API_TMBD,
+      Authorization:`Bearer ${process.env.TOKEN_API_TMBD}`,
     },
-    
   };
 
   try {
-    const responsePopular = await fetch(urlPopular, options);
+    const [responsePopular, responseUpcoming] = await Promise.all([
+      fetch(urlPopular, options),
+      fetch(urlUpcoming, options)
+    ]);
+
     const dataPopular = await responsePopular.json();
-    const responseUpcoming = await fetch(urlUpcoming, options);
     const dataUpcoming = await responseUpcoming.json();
 
-    // Renderizar la vista enviando todo el JSON
     res.render("inicio", {
       title: "Inicio",
-      popular: dataPopular.results, // Pasar solo los resultados
+      sesion: req.session.idUsuario,
+      usuario: usuario,
+      favoritos: favoritos,
+      pendientes: pendientes,
+      populares: dataPopular.results, // Pasar solo los resultados
       proximamente: dataUpcoming.results, // Pasar solo los resultados
     });
   } catch (error) {

@@ -6,21 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MovieMania</title>
     <link rel="stylesheet" href="styles/inicio.css">
+    <link rel="stylesheet" href="styles/loader.css">
     <link rel="icon" href="images/logo/Logo.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer type="module" src="scripts/guardarPelicula.js"></script>
+    <script defer type="module" src="scripts/pendientes.js"></script>
+    <script defer type="module" src="scripts/favoritos.js"></script>
+    <script defer type="module" src="scripts/sesion.js"></script>
+    <script defer src="scripts/proximamente.js"></script>
+    <script defer src="scripts/populares.js"></script>
+    <script defer src="scripts/cerrarModal.js"></script>
+    <script defer src="https://kit.fontawesome.com/f5b8feb020.js" crossorigin="anonymous"></script>
+    <script>
+        const proximamente = <%- JSON.stringify(proximamente) %>;
+        const populares = <%- JSON.stringify(populares) %>;
+        const favoritos = <%- JSON.stringify(favoritos) %>;
+        const pendientes = <%- JSON.stringify(pendientes) %>;
+    </script>
 </head>
 
 <body>
     <div class="contenido">
         <section class="informacion">
-            Informacion
+            <nav>
+                <a href="#">© 2021 MovieMania</a>
+                <div class="footer__redes">
+                    <a href="https://www.facebook.com/"><i class="fa-brands fa-square-facebook"></i></a>
+                    <a href="https://x.com/home"><i class="fa-brands fa-square-x-twitter"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </nav>
         </section>
         <header>
             <nav>
                 <img class="logo" src="images/logo/Logo-black.png" alt="">
-                <ul>
-                    <li><button class="boton__1" type="button">Iniciar Sesión</button></li>
-                    <li><button class="boton__1" type="button">Registro</button></li>
-                </ul>
+                <% if (sesion===null) {%>
+                    <ul>
+                        <li><button class="boton__1" type="button" onclick="abrirIniciarSesion()">Iniciar
+                                Sesión</button>
+                        </li>
+                        <li><button class="boton__1" type="button" onclick="abrirRegistro()">Registro</button></li>
+                    </ul>
+                    <% } else { %>
+                        <ul>
+                            <li class="sesion-usuario">Bienvenido, <%= usuario %>
+                            </li>
+                            <li><button class="boton__1" type="button" onclick="cerrarSesion()">Cerrar Sesión</button>
+                            </li>
+                        </ul>
+                        <% } %>
             </nav>
         </header>
         <main>
@@ -31,117 +65,324 @@
                     <button class="boton__1" type="button">Ver más</button>
                 </div>
             </section>
-            <!--!   REVISAR   -->
-            <!-- <section class="imagenes">
-                <img src="images/Prueba.png" alt="">
-                <img src="images/Prueba.png" alt="">
-                <img src="images/Prueba.png" alt="">
-            </section> -->
+
+            <div class="inicio__imagenes">
+                <img src="images/background/movie1.png" alt="">
+                <img src="images/background/movie2.png" alt="">
+                <img src="images/background/movie3.png" alt="">
+            </div>
+
             <section class="guardadas">
                 <h2>Guardadas</h2>
                 <div class="guardadas__contenido">
-                    <div class="favoritas">
-                        <h3>Favoritas</h3>
-                        <div class="guardadas__tarjetas">
-                            <div class="guardadas__tarjeta">
-                                <img class="guardadas__tarjeta--imagen" class="" src="images/Prueba.png" alt="">
-                                <div class="guardadas__tarjeta--detalles">
-                                    <span class="guardadas__tarjeta--titulo">Prueba</span>
-                                    <span class="guardadas__tarjeta--calificacion">4.5/5</span>
-                                </div>
-                                <p class="guardadas__tarjeta--descripcion">
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur corporis voluptatum nemo ea debitis earum suscipit magni inventore rerum ad? Impedit magni excepturi cupiditate eligendi minus iusto beatae maxime animi.
-                                </p>
-                                <button class="boton__1 guardadas__tarjeta--boton" type="button">Detalles</button>
-                            </div>
-                            <div class="guardadas__tarjeta">
-                                <img class="guardadas__tarjeta--imagen" class="" src="images/Prueba.png" alt="">
-                                <div class="guardadas__tarjeta--detalles">
-                                    <span class="guardadas__tarjeta--titulo">Prueba</span>
-                                    <span class="guardadas__tarjeta--calificacion">4.5/5</span>
-                                </div>
-                                <p class="guardadas__tarjeta--descripcion">
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur corporis voluptatum nemo ea debitis earum suscipit magni inventore rerum ad? Impedit magni excepturi cupiditate eligendi minus iusto beatae maxime animi.
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur corporis voluptatum nemo ea debitis earum suscipit magni inventore rerum ad? Impedit magni excepturi cupiditate eligendi minus iusto beatae maxime animi.
-                                    <br>m ipsum dolor sit, amet consectetur adipisicing elit. Tenetur corporis voluptatum nemo ea debitis earum suscipit magni inventore rerum ad? Impedit magni excepturi cupiditate eligendi minus iusto beatae maxime animi.
-                                    <br>m ipsum dolor sit, amet consectetur adipisicing elit. Tenetur corporis voluptatum nemo ea debitis earum suscipit magni inventore rerum ad? Impedit magni excepturi cupiditate eligendi minus iusto beatae maxime animi.
-                                    <br>
-                                </p>
-                                <button class="boton__1 guardadas__tarjeta--boton" type="button">Detalles</button>
-                            </div>
-                            <div class="guardadas__tarjeta">
-                                <img class="guardadas__tarjeta--imagen" class="" src="images/Prueba.png" alt="">
-                                <div class="guardadas__tarjeta--detalles">
-                                    <span class="guardadas__tarjeta--titulo">Prueba</span>
-                                    <span class="guardadas__tarjeta--calificacion">4.5/5</span>
-                                </div>
-                                <p class="guardadas__tarjeta--descripcion">
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur corporis voluptatum nemo ea debitis earum suscipit magni inventore rerum ad? Impedit magni excepturi cupiditate eligendi minus iusto beatae maxime animi.
-                                </p>
-                                <button class="boton__1 guardadas__tarjeta--boton" type="button">Detalles</button>
-                            </div>
+                    <div class="pendientes">
+                        <h3 id="pendientes__titulo">Pendientes</h3>
+                        <div id="pendientes__tarjeta" class="pendientes__contenido">
+                            <button class="pendientes__peliculas--avanzar anterior" type="button"
+                                onclick="retrocederPendientes()">
+                                <img src="images/svg/caret-left.svg" alt="">
+                            </button>
+
+                            <div id="pendientes__tarjeta--peliculas" class="guardadas__tarjetas"></div>
+
+                            <button class="pendientes__peliculas--avanzar siguiente" type="button"
+                                onclick="avanzarPendientes()">
+                                <img src="images/svg/caret-right.svg" alt="">
+                            </button>
                         </div>
                     </div>
-                    <div class="pendientes">
-                        Pendientes
+                    
+                    <div class="favoritas">
+                        <h3 id="favoritas__titulo">Favoritas</h3>
+                        <div id="favoritas__tarjeta" class="favoritas__contenido">
+                            <button class="favoritas__peliculas--avanzar anterior" type="button"
+                                onclick="retrocederFavoritos()">
+                                <img src="images/svg/caret-left.svg" alt="">
+                            </button>
+
+                            <div id="favoritas__tarjeta--peliculas" class="guardadas__tarjetas"></div>
+
+                            <button class="favoritas__peliculas--avanzar siguiente" type="button"
+                                onclick="avanzarFavoritos()">
+                                <img src="images/svg/caret-right.svg" alt="">
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
             <section class="proximamente">
-                <h2>Proximamente</h2>
+                <h2 id="proximamente__titulo">Proximamente</h2>
                 <div class="proximamente__peliculas">
+                    <button class="proximamente__peliculas--avanzar anterior" type="button"
+                        onclick="retrocederProximamente()">
+                        <img src="images/svg/caret-left.svg" alt="">
+                    </button>
                     <div class="proximamente__pelicula">
                         <div class="proximamente__pelicula--informacion">
-                            <span class="proximamente__pelicula--titulo"><%= proximamente[0].original_title %></span>
+                            <span id="proximamente__pelicula--titulo-1" class="proximamente__pelicula--titulo"></span>
+                            <p id="proximamente__pelicula--descripcion-1" class="proximamente__pelicula--descripcion">
+                            </p>
+                            <p id="proximamente__pelicula--fecha-estreno-1"
+                                class="proximamente__pelicula--fecha_estreno"></p>
+                            <button class="boton__1 proximamente__pelicula--boton" type="button"
+                                onclick="abrirModalProximamente(0)">Ver más</button>
                         </div>
-                        <img src="https://image.tmdb.org/t/p/w500<%= proximamente[0].backdrop_path %>" alt="">
+                        <img id="proximamente__pelicula--imagen-1" src="" alt="">
                     </div>
                     <div class="proximamente__pelicula">
                         <div class="proximamente__pelicula--informacion">
-                            <span class="proximamente__pelicula--titulo"><%= proximamente[1].original_title %></span>
+                            <span id="proximamente__pelicula--titulo-2" class="proximamente__pelicula--titulo"></span>
+                            <p id="proximamente__pelicula--descripcion-2" class="proximamente__pelicula--descripcion">
+                            </p>
+                            <p id="proximamente__pelicula--fecha-estreno-2"
+                                class="proximamente__pelicula--fecha_estreno"></p>
+                            <button class="boton__1 proximamente__pelicula--boton" type="button"
+                                onclick="abrirModalProximamente(1)">Ver más</button>
                         </div>
-                        <img src="https://image.tmdb.org/t/p/w500<%= proximamente[1].backdrop_path %>" alt="">
+                        <img id="proximamente__pelicula--imagen-2" src="" alt="">
                     </div>
                     <div class="proximamente__pelicula">
                         <div class="proximamente__pelicula--informacion">
-                            <span class="proximamente__pelicula--titulo"><%= proximamente[2].original_title %></span>
+                            <span id="proximamente__pelicula--titulo-3" class="proximamente__pelicula--titulo"></span>
+                            <p id="proximamente__pelicula--descripcion-3" class="proximamente__pelicula--descripcion">
+                            </p>
+                            <p id="proximamente__pelicula--fecha-estreno-3"
+                                class="proximamente__pelicula--fecha_estreno"></p>
+                            <button class="boton__1 proximamente__pelicula--boton" type="button"
+                                onclick="abrirModalProximamente(2)">Ver más</button>
                         </div>
-                        <img src="https://image.tmdb.org/t/p/w500<%= proximamente[2].backdrop_path %>" alt="">
+                        <img id="proximamente__pelicula--imagen-3" src="" alt="">
                     </div>
                     <div class="proximamente__pelicula">
                         <div class="proximamente__pelicula--informacion">
-                            <span class="proximamente__pelicula--titulo"><%= proximamente[3].original_title %></span>
+                            <span id="proximamente__pelicula--titulo-4" class="proximamente__pelicula--titulo"></span>
+                            <p id="proximamente__pelicula--descripcion-4" class="proximamente__pelicula--descripcion">
+                            </p>
+                            <p id="proximamente__pelicula--fecha-estreno-4"
+                                class="proximamente__pelicula--fecha_estreno"></p>
+                            <button class="boton__1 proximamente__pelicula--boton" type="button"
+                                onclick="abrirModalProximamente(3)">Ver más</button>
                         </div>
-                        <img src="https://image.tmdb.org/t/p/w500<%= proximamente[3].backdrop_path %>" alt="">
+                        <img id="proximamente__pelicula--imagen-4" src="" alt="">
                     </div>
+                    <button class="proximamente__peliculas--avanzar siguiente" type="button"
+                        onclick="avanzarProximamente()">
+                        <img src="images/svg/caret-right.svg" alt=""> 
+                    </button>
                 </div>
             </section>
-    
+
             <section class="populares">
-                <h2>Populares</h2>
+                <h2 id="populares__titulo">Populares</h2>
                 <div class="populares__peliculas">
+                    <button class="populares__peliculas--avanzar anterior" type="button"
+                        onclick="retrocederPopulares()">
+                        <img src="images/svg/caret-left.svg" alt="">
+                    </button>
                     <div class="populares__pelicula">
-                        <img src="https://image.tmdb.org/t/p/w500<%= popular[0].backdrop_path %>" alt="">
-                        <span class="populares__pelicula--titulo"><%= popular[0].original_title %></span>
-                        <button class="boton__2 populares__pelicula--boton" type="button">Ver más</button>
+                        <img id="populares__pelicula--imagen-1" src="https://image.tmdb.org/t/p/w500<%= populares[0].backdrop_path %>" alt="">
+                        <span id="populares__pelicula--titulo-1" class="populares__pelicula--titulo"></span>
+                        <button class="boton__2 populares__pelicula--boton" type="button" onclick="abrirModalPopulares(0)">Ver más</button>
                     </div>
                     <div class="populares__pelicula populares__pelicula--grande">
-                        <img src="https://image.tmdb.org/t/p/w500<%= popular[1].backdrop_path %>" alt="">
-                        <span class="populares__pelicula--titulo"><%= popular[1].original_title %></span>
-                        <button class="boton__2 populares__pelicula--boton" type="button">Ver más</button>
+                        <img id="populares__pelicula--imagen-2" src="https://image.tmdb.org/t/p/w500<%= populares[1].backdrop_path %>" alt="">
+                        <span id="populares__pelicula--titulo-2" class="populares__pelicula--titulo"></span>
+                        <button class="boton__2 populares__pelicula--boton" type="button" onclick="abrirModalPopulares(1)">Ver más</button>
                     </div>
                     <div class="populares__pelicula">
-                        <img src="https://image.tmdb.org/t/p/w500<%= popular[2].backdrop_path %>" alt="">
-                        <span class="populares__pelicula--titulo"><%= popular[2].original_title %></span>
-                        <button class="boton__2 populares__pelicula--boton" type="button">Ver más</button>
+                        <img id="populares__pelicula--imagen-3" src="https://image.tmdb.org/t/p/w500<%= populares[2].backdrop_path %>" alt="">
+                        <span id="populares__pelicula--titulo-3" class="populares__pelicula--titulo"></span>
+                        <button class="boton__2 populares__pelicula--boton" type="button" onclick="abrirModalPopulares(2)">Ver más</button>
                     </div>
+                    <button class="populares__peliculas--avanzar siguiente" type="button"
+                        onclick="avanzarPopulares()">
+                        <img src="images/svg/caret-right.svg" alt="">
+                    </button>
                 </div>
             </section>
         </main>
-        <footer>
-            Footer
+        <footer class="footer">
+            <div class="footer__izquierda">
+                <div class="footer__redes">
+                    <a href="https://www.facebook.com/"><i class="fa-brands fa-square-facebook"></i></a>
+                    <a href="https://x.com/home"><i class="fa-brands fa-square-x-twitter"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                <div class="footer__licencias">
+                    <a href="#">Términos y condiciones</a>
+                    <a href="#">Política de privacidad</a>
+                    <a href="#">© 2021 MovieMania</a>
+                </div>
+            </div>
+            <div class="footer__menus">
+                <ul class="footer__menu">
+                    <li><span>Contenido</span></li>
+                    <li><a href="#">Peliculas guardadas</a></li>
+                    <li><a href="#">Peliculas por ver</a></li>
+                    <li><a href="#">Proximamente</a></li>
+                    <li><a href="#">Populares</a></li>
+                </ul>
+                <ul class="footer__menu">
+                    <li><span>Ayuda</span></a></li>
+                    <li><a href="#">Soporte</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Contactanos</a></li>
+                    <li><a href="#">Estado</li>
+                </ul>
+                <ul class="footer__menu">
+                    <li><span>Compañía</span></li>
+                    <li><a href="#">Quienes somos</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Planes y precios</a></li>
+                    <li><a href="#">Novedades</a></li>
+                </ul>
+            </div>
         </footer>
     </div>
+
+    <section id="modal-inicio-sesion" class="modal__fondo"
+        onclick="cerrarModal('modal-inicio-sesion', 'modal-inicio-sesion__contenido')">
+        <div id="modal-inicio-sesion__contenido" class="modal__contenido modal__contenido--inicio-sesion"
+            onclick="event.stopPropagation()">
+            <button class="boton__2 modal__cerrar" type="button"
+                onclick="cerrarModal('modal-inicio-sesion', 'modal-inicio-sesion__contenido')">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <h3>Inicia sesión en tu cuenta</h3>
+            <form id="iniciar-sesion" class="formulario iniciar-sesion" action="#">
+                <input type="email" name="correo" placeholder="Correo electrónico" required>
+                <input type="password" name="contrasenia" placeholder="Contraseña" required>
+                <button class="boton__1" type="button" onclick="acceder()">Iniciar sesión</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="modal-registro" class="modal__fondo"
+        onclick="cerrarModal('modal-registro', 'modal-registro__contenido')">
+        <div id="modal-registro__contenido" class="modal__contenido modal__contenido--registro"
+            onclick="event.stopPropagation()">
+            <button class="boton__2 modal__cerrar" type="button"
+                onclick="cerrarModal('modal-registro', 'modal-registro__contenido')">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <h3>Crea una cuenta</h3>
+            <form id="registrar" class="formulario registrar" action="#">
+                <input type="text" name="usuario" placeholder="Usuario" required>
+                <input type="email" name="correo" placeholder="Correo" required>
+                <input type="password" name="contrasenia" placeholder="Contraseña" required>
+                <button class="boton__1" type="button" onclick="registrarse()">Registrarse</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="modal-proximamente" class="modal__fondo"
+        onclick="cerrarModal('modal-proximamente', 'modal-proximamente__contenido')">
+        <div id="modal-proximamente__contenido" class="modal__contenido modal__contenido--proximamente"
+            onclick="event.stopPropagation()">
+            <button class="boton__2 modal__cerrar" type="button"
+                onclick="cerrarModal('modal-proximamente', 'modal-proximamente__contenido')">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <img id="modal-proximamente__imagen" src="" alt="">
+            <div class="modal-proximamente__detalles">
+                <h2 id="modal-proximamente__titulo"></h2>
+                <p id="modal-proximamente__fecha-genero"></p>
+                <p id="modal-proximamente__duracion"></p>
+
+                <h3>Vista general</h3>
+                <div class="modal-proximamente__vista-general">
+                    <p id="modal-proximamente__descripcion" class="modal-proximamente__descripcion"></p>
+                </div>
+                <div class="modal-proximamente__botones">
+
+                    <button id="modal-proximamente__botones--favorito"
+                        class="boton__3 modal-proximamente__botones--favorito" type="button" <% if(sesion !==null) { %>
+                        onclick="marcarFavoritos(this)" <% } %>>
+                            <i class="fa-solid fa-heart"></i>
+                            <% if (sesion===null) { %>
+                                <span class="mensaje">Iniciar sesión para añadir esta película a tu lista de
+                                    favoritas</span>
+                                <% } else { %>
+                                    <span class="mensaje">Añadir a favoritos</span>
+                                    <% } %>
+                    </button>
+
+                    <button id="modal-proximamente__botones--eliminar-favoritos"
+                        class="boton__3 modal-proximamente__botones--eliminar favoritos" type="button" <% if(sesion !==null) { %>
+                        onclick="eliminarFavoritos(this)" <% } %>>
+                            <i class="fa-solid fa-trash"></i>
+                            <span class="mensaje">Eliminar de favoritos</span>
+                    </button>
+
+                    <button id="modal-proximamente__botones--pendiente"
+                        class="boton__3 modal-proximamente__botones--pendiente" type="button" <% if(sesion !==null) { %>
+                        onclick="marcarPendientes(this)" <% } %>>
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <% if (sesion===null) { %>
+                                <span class="mensaje">Iniciar sesión para añadir esta película a tus pendientes</span>
+                                <% } else { %>
+                                    <span class="mensaje">Añadir a pendientes</span>
+                                    <% } %>
+                    </button>
+
+                    <button id="modal-proximamente__botones--eliminar-pendientes"
+                        class="boton__3 modal-proximamente__botones--eliminar pendientes" type="button" <% if(sesion !==null) { %>
+                        onclick="eliminarPendientes(this)" <% } %>>
+                            <i class="fa-solid fa-trash"></i>
+                            <span class="mensaje">Eliminar de pendientes</span>
+                    </button>
+
+                    <% if (sesion===null) { %>
+                        <style>
+                            .modal-proximamente__botones > button {
+                                background-color: gray;
+                            }
+                        </style>
+                        <% } %>
+
+                            <style>
+                                .modal-proximamente__botones > button {
+                                    position: relative;
+                                    display: flex;
+                                    justify-content: center;
+                                }
+
+                                .modal-proximamente__botones .mensaje {
+                                    font-weight: 400;
+                                    font-size: 0.8rem;
+                                    position: absolute;
+                                    background-color: #3c0f0f;
+                                    padding: 6px 10px;
+                                    border-radius: 10px;
+                                    text-align: center;
+                                    left: 50%;
+                                    top: 110%;
+                                    transform: translateX(-50%);
+                                    width: auto;
+                                    white-space: nowrap;
+                                    visibility: hidden;
+                                    opacity: 0;
+                                    transition: all 0.2s ease;
+                                    cursor: default;
+                                }
+
+                                .modal-proximamente__botones > button:hover .mensaje {
+                                    visibility: visible;
+                                    opacity: 1;
+                                }
+                            </style>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="loader" class="dots-container">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </section>
 </body>
 
 </html>
