@@ -6,5 +6,6 @@ router.post("/agregarFavoritos", movieController.agregarFavoritos);
 router.post("/agregarPendientes", movieController.agregarPendientes);
 router.post("/eliminarFavoritos", movieController.eliminarFavoritos);
 router.post("/eliminarPendientes", movieController.eliminarPendientes);
+router.post("/consultarPelicula", movieController.consultarPelicula);
 
 module.exports = router;

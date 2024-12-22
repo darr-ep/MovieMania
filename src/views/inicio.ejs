@@ -12,12 +12,15 @@
     <script defer type="module" src="scripts/guardarPelicula.js"></script>
     <script defer type="module" src="scripts/pendientes.js"></script>
     <script defer type="module" src="scripts/favoritos.js"></script>
+
     <script defer type="module" src="scripts/sesion.js"></script>
     <script defer src="scripts/proximamente.js"></script>
     <script defer src="scripts/populares.js"></script>
     <script defer src="scripts/cerrarModal.js"></script>
     <script defer src="https://kit.fontawesome.com/f5b8feb020.js" crossorigin="anonymous"></script>
     <script>
+        const sesionActiva = Boolean(<%- sesion %>);
+        console.log(sesionActiva);
         const proximamente = <%- JSON.stringify(proximamente) %>;
         const populares = <%- JSON.stringify(populares) %>;
         const favoritos = <%- JSON.stringify(favoritos) %>;

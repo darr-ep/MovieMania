@@ -1,42 +1,55 @@
 import { swalError, swalExito } from "./utils.js";
 
-let data = [];
+const data = [];
 let currentPage = 1;
-const resultsPerPage = 3
+const resultsPerPage = 3;
 
 document.addEventListener("DOMContentLoaded", async function () {
   async function fetchMovies() {
-    data = [];
-    for (const pendiente of pendientes) {
-      const url = `https://api.themoviedb.org/3/movie/${pendiente.pelicula_id}?language=es-MX`;
-      const options = {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNzIyZGU5NWUwZjFmODg2MzNiZDA1ZTZkYjI3YTgwYyIsIm5iZiI6MTczNDcyNDUwNi4wMTcsInN1YiI6IjY3NjVjYjlhMGIyZmJiOWRlYTVlMDRiMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-nMkal8lVWqaJwEOJpAVp8vQidcdUzAJZ-hXFCbvnrw",
-        },
-      };
+    try {
+      for (const pendiente of pendientes) {
+        const idMovie = pendiente.pelicula_id;
 
-      try {
-        const response = await fetch(url, options);
-        const movieData = await response.json();
+        const res = await fetch("/movie/consultarPelicula", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ idMovie }),
+        });
+
+        if (res.status === 404) {
+          swalError("Película no encontrada.");
+          return;
+        }
+
+        if (res.status === 500) {
+          swalError("Error al obtener la información de la película.");
+          return;
+        }
+
+        const movieData = await res.json();
         data.push(movieData);
-      } catch (error) {
-        console.error(error);
       }
+    } catch (error) {
+      console.error(error);
     }
   }
 
-  // Cargar las películas iniciales
   await fetchMovies();
   renderMovies();
 });
 
 function renderMovies() {
+  if (!sesionActiva) {
+    const pendientesContenido = document.getElementById("pendientes__tarjeta");
+    pendientesContenido.innerHTML = "Inicia sesión para ver tus películas pendientes";
+    return;
+  }
+
   if (data.length === 0) {
     const pendientesContenido = document.getElementById("pendientes__tarjeta");
-    pendientesContenido.innerHTML = "No tienes películas pendientes.";
+    pendientesContenido.innerHTML = "No tienes películas pendientes";
     return;
   }
 
@@ -128,114 +141,119 @@ async function abrirModalPendientes(idMovie) {
   document.getElementById("loader").classList.add("mostrar");
   document.getElementById("modal-proximamente__imagen").src = "";
 
-  const url = `https://api.themoviedb.org/3/movie/${idMovie}?language=es-MX`;
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNzIyZGU5NWUwZjFmODg2MzNiZDA1ZTZkYjI3YTgwYyIsIm5iZiI6MTczNDcyNDUwNi4wMTcsInN1YiI6IjY3NjVjYjlhMGIyZmJiOWRlYTVlMDRiMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-nMkal8lVWqaJwEOJpAVp8vQidcdUzAJZ-hXFCbvnrw",
-    },
-  };
-
-  let data;
-
   try {
-    const response = await fetch(url, options);
-    data = await response.json();
+    const res = await fetch("/movie/consultarPelicula", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ idMovie }),
+    });
+
+    if (res.status === 404) {
+      swalError("Película no encontrada.");
+      return;
+    }
+
+    if (res.status === 500) {
+      swalError("Error al obtener la información de la película.");
+      return;
+    }
+
+    const data = await res.json();
 
     document.getElementById("loader").classList.remove("mostrar");
+
+    let generos;
+    for (const gender of data.genres) {
+      if (generos !== undefined) {
+        generos = generos + gender.name + ", ";
+      } else {
+        generos = gender.name + ", ";
+      }
+    }
+    generos = generos.slice(0, -2);
+
+    let duracion = data.runtime;
+    let horas = Math.floor(duracion / 60);
+    let minutos = duracion % 60;
+
+    let duracionFormateada = minutos
+      ? `${horas}h ${minutos}m`
+      : "Duración no disponible";
+
+    const botonFavorito = document.getElementById(
+      "modal-proximamente__botones--favorito"
+    );
+    const botonPendiente = document.getElementById(
+      "modal-proximamente__botones--pendiente"
+    );
+    const botonEliminarFavorito = document.getElementById(
+      "modal-proximamente__botones--eliminar-favoritos"
+    );
+    const botonEliminarPendiente = document.getElementById(
+      "modal-proximamente__botones--eliminar-pendientes"
+    );
+
+    document.getElementById("modal-proximamente__titulo").textContent =
+      data.title;
+    document.getElementById("modal-proximamente__imagen").src =
+      "https://image.tmdb.org/t/p/w200" + data.poster_path;
+    document.getElementById("modal-proximamente__descripcion").textContent =
+      data.overview ? data.overview : "Descripción no disponible";
+    document.getElementById("modal-proximamente__fecha-genero").textContent =
+      data.release_date + " • " + generos;
+    document.getElementById("modal-proximamente__duracion").textContent =
+      duracionFormateada;
+
+    botonFavorito.setAttribute("data-movie-id", data.id);
+    botonPendiente.setAttribute("data-movie-id", data.id);
+    botonEliminarFavorito.setAttribute("data-movie-id", data.id);
+    botonEliminarPendiente.setAttribute("data-movie-id", data.id);
+
+    const modal = document.getElementById("modal-proximamente");
+    const modalContenido = document.getElementById(
+      "modal-proximamente__contenido"
+    );
+
+    modal.classList.add("mostrar");
+    modalContenido.classList.add("modal__contenido--abierto");
+
+    let favoritoEncontrado = false;
+    let pendienteEncontrado = false;
+
+    for (const favorito of favoritos) {
+      if (data.id == favorito.pelicula_id) {
+        favoritoEncontrado = true;
+        break;
+      }
+    }
+
+    for (const pendiente of pendientes) {
+      if (data.id == pendiente.pelicula_id) {
+        pendienteEncontrado = true;
+        break;
+      }
+    }
+
+    if (favoritoEncontrado) {
+      botonFavorito.style.display = "none";
+      botonEliminarFavorito.style.display = "block";
+    } else {
+      botonFavorito.style.display = "block";
+      botonEliminarFavorito.style.display = "none";
+    }
+
+    if (pendienteEncontrado) {
+      botonPendiente.style.display = "none";
+      botonEliminarPendiente.style.display = "block";
+    } else {
+      botonPendiente.style.display = "block";
+      botonEliminarPendiente.style.display = "none";
+    }
   } catch (error) {
     console.error(error);
     document.getElementById("loader").classList.remove("mostrar");
-  }
-
-  let generos;
-  for (const gender of data.genres) {
-    if (generos !== undefined) {
-      generos = generos + gender.name + ", ";
-    } else {
-      generos = gender.name + ", ";
-    }
-  }
-  generos = generos.slice(0, -2);
-
-  let duracion = data.runtime;
-  let horas = Math.floor(duracion / 60);
-  let minutos = duracion % 60;
-
-  let duracionFormateada = minutos
-    ? `${horas}h ${minutos}m`
-    : "Duración no disponible";
-
-  const botonFavorito = document.getElementById(
-    "modal-proximamente__botones--favorito"
-  );
-  const botonPendiente = document.getElementById(
-    "modal-proximamente__botones--pendiente"
-  );
-  const botonEliminarFavorito = document.getElementById(
-    "modal-proximamente__botones--eliminar-favoritos"
-  );
-  const botonEliminarPendiente = document.getElementById(
-    "modal-proximamente__botones--eliminar-pendientes"
-  );
-
-  document.getElementById("modal-proximamente__titulo").textContent =
-    data.title;
-  document.getElementById("modal-proximamente__imagen").src =
-    "https://image.tmdb.org/t/p/w200" + data.poster_path;
-  document.getElementById("modal-proximamente__descripcion").textContent =
-    data.overview ? data.overview : "Descripción no disponible";
-  document.getElementById("modal-proximamente__fecha-genero").textContent =
-    data.release_date + " • " + generos;
-  document.getElementById("modal-proximamente__duracion").textContent =
-    duracionFormateada;
-
-  botonFavorito.setAttribute("data-movie-id", data.id);
-  botonPendiente.setAttribute("data-movie-id", data.id);
-  botonEliminarFavorito.setAttribute("data-movie-id", data.id);
-  botonEliminarPendiente.setAttribute("data-movie-id", data.id);
-
-  const modal = document.getElementById("modal-proximamente");
-  const modalContenido = document.getElementById(
-    "modal-proximamente__contenido"
-  );
-
-  modal.classList.add("mostrar");
-  modalContenido.classList.add("modal__contenido--abierto");
-
-  let favoritoEncontrado = false;
-  let pendienteEncontrado = false;
-
-  for (const favorito of favoritos) {
-    if (data.id == favorito.pelicula_id) {
-      favoritoEncontrado = true;
-      break;
-    }
-  }
-
-  for (const pendiente of pendientes) {
-    if (data.id == pendiente.pelicula_id) {
-      pendienteEncontrado = true;
-      break;
-    }
-  }
-
-  if (favoritoEncontrado) {
-    botonFavorito.style.display = "none";
-    botonEliminarFavorito.style.display = "block";
-  } else {
-    botonFavorito.style.display = "block";
-    botonEliminarFavorito.style.display = "none";
-  }
-
-  if (pendienteEncontrado) {
-    botonPendiente.style.display = "none";
-    botonEliminarPendiente.style.display = "block";
-  } else {
-    botonPendiente.style.display = "block";
-    botonEliminarPendiente.style.display = "none";
   }
 }
 

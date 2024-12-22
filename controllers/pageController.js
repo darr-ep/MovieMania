@@ -47,8 +47,8 @@ const inicio = async (req, res) => {
       usuario: usuario,
       favoritos: favoritos,
       pendientes: pendientes,
-      populares: dataPopular.results, // Pasar solo los resultados
-      proximamente: dataUpcoming.results, // Pasar solo los resultados
+      populares: dataPopular.results,
+      proximamente: dataUpcoming.results,
     });
   } catch (error) {
     console.error(error);
