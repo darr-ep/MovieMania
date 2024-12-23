@@ -59,6 +59,14 @@ async function consultarExistenciaUsuario(usuario_id) {
   return null;
 }
 
+async function consultarAdministrador(usuario_id) {
+  const query = `SELECT * FROM administradores WHERE usuario_id = ?`;
+
+  const consulta = await ejecutarConsulta(query, [usuario_id]);
+
+  return consulta.length > 0 ? true : false;
+}
+
 async function consultarUsuarioDuplicado(correo) {
   const query = `SELECT usuario_id FROM usuarios WHERE correo = ?`;
   const consulta = await ejecutarConsulta(query, [correo]);
@@ -71,4 +79,5 @@ module.exports = {
   consultarUsuario,
   consultarUsuarioDuplicado,
   consultarExistenciaUsuario,
+  consultarAdministrador
 };

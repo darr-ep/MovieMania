@@ -12,15 +12,15 @@
     <script defer type="module" src="scripts/guardarPelicula.js"></script>
     <script defer type="module" src="scripts/pendientes.js"></script>
     <script defer type="module" src="scripts/favoritos.js"></script>
-
+    <script defer type="module" src="scripts/administrador.js"></script>
     <script defer type="module" src="scripts/sesion.js"></script>
+
     <script defer src="scripts/proximamente.js"></script>
     <script defer src="scripts/populares.js"></script>
     <script defer src="scripts/cerrarModal.js"></script>
     <script defer src="https://kit.fontawesome.com/f5b8feb020.js" crossorigin="anonymous"></script>
     <script>
         const sesionActiva = Boolean(<%- sesion %>);
-        console.log(sesionActiva);
         const proximamente = <%- JSON.stringify(proximamente) %>;
         const populares = <%- JSON.stringify(populares) %>;
         const favoritos = <%- JSON.stringify(favoritos) %>;
@@ -54,8 +54,13 @@
                         <ul>
                             <li class="sesion-usuario">Bienvenido, <%= usuario %>
                             </li>
-                            <li><button class="boton__1" type="button" onclick="cerrarSesion()">Cerrar Sesión</button>
-                            </li>
+                            <% if (administrador) { %>
+                                <li><button class="boton__1" type="button" onclick="abrirUsuarios()">Ver
+                                        usuarios</button>
+                                    <% } %>
+                                <li><button class="boton__1" type="button" onclick="cerrarSesion()">Cerrar
+                                        Sesión</button>
+                                </li>
                         </ul>
                         <% } %>
             </nav>
@@ -94,7 +99,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <div class="favoritas">
                         <h3 id="favoritas__titulo">Favoritas</h3>
                         <div id="favoritas__tarjeta" class="favoritas__contenido">
@@ -170,7 +175,7 @@
                     </div>
                     <button class="proximamente__peliculas--avanzar siguiente" type="button"
                         onclick="avanzarProximamente()">
-                        <img src="images/svg/caret-right.svg" alt=""> 
+                        <img src="images/svg/caret-right.svg" alt="">
                     </button>
                 </div>
             </section>
@@ -183,22 +188,27 @@
                         <img src="images/svg/caret-left.svg" alt="">
                     </button>
                     <div class="populares__pelicula">
-                        <img id="populares__pelicula--imagen-1" src="https://image.tmdb.org/t/p/w500<%= populares[0].backdrop_path %>" alt="">
+                        <img id="populares__pelicula--imagen-1"
+                            src="https://image.tmdb.org/t/p/w500<%= populares[0].backdrop_path %>" alt="">
                         <span id="populares__pelicula--titulo-1" class="populares__pelicula--titulo"></span>
-                        <button class="boton__2 populares__pelicula--boton" type="button" onclick="abrirModalPopulares(0)">Ver más</button>
+                        <button class="boton__2 populares__pelicula--boton" type="button"
+                            onclick="abrirModalPopulares(0)">Ver más</button>
                     </div>
                     <div class="populares__pelicula populares__pelicula--grande">
-                        <img id="populares__pelicula--imagen-2" src="https://image.tmdb.org/t/p/w500<%= populares[1].backdrop_path %>" alt="">
+                        <img id="populares__pelicula--imagen-2"
+                            src="https://image.tmdb.org/t/p/w500<%= populares[1].backdrop_path %>" alt="">
                         <span id="populares__pelicula--titulo-2" class="populares__pelicula--titulo"></span>
-                        <button class="boton__2 populares__pelicula--boton" type="button" onclick="abrirModalPopulares(1)">Ver más</button>
+                        <button class="boton__2 populares__pelicula--boton" type="button"
+                            onclick="abrirModalPopulares(1)">Ver más</button>
                     </div>
                     <div class="populares__pelicula">
-                        <img id="populares__pelicula--imagen-3" src="https://image.tmdb.org/t/p/w500<%= populares[2].backdrop_path %>" alt="">
+                        <img id="populares__pelicula--imagen-3"
+                            src="https://image.tmdb.org/t/p/w500<%= populares[2].backdrop_path %>" alt="">
                         <span id="populares__pelicula--titulo-3" class="populares__pelicula--titulo"></span>
-                        <button class="boton__2 populares__pelicula--boton" type="button" onclick="abrirModalPopulares(2)">Ver más</button>
+                        <button class="boton__2 populares__pelicula--boton" type="button"
+                            onclick="abrirModalPopulares(2)">Ver más</button>
                     </div>
-                    <button class="populares__peliculas--avanzar siguiente" type="button"
-                        onclick="avanzarPopulares()">
+                    <button class="populares__peliculas--avanzar siguiente" type="button" onclick="avanzarPopulares()">
                         <img src="images/svg/caret-right.svg" alt="">
                     </button>
                 </div>
@@ -226,11 +236,11 @@
                     <li><a href="#">Populares</a></li>
                 </ul>
                 <ul class="footer__menu">
-                    <li><span>Ayuda</span></a></li>
+                    <li><span>Ayuda</span></li>
                     <li><a href="#">Soporte</a></li>
                     <li><a href="#">FAQs</a></li>
                     <li><a href="#">Contactanos</a></li>
-                    <li><a href="#">Estado</li>
+                    <li><a href="#">Estado</a></li>
                 </ul>
                 <ul class="footer__menu">
                     <li><span>Compañía</span></li>
@@ -311,7 +321,8 @@
                     </button>
 
                     <button id="modal-proximamente__botones--eliminar-favoritos"
-                        class="boton__3 modal-proximamente__botones--eliminar favoritos" type="button" <% if(sesion !==null) { %>
+                        class="boton__3 modal-proximamente__botones--eliminar favoritos" type="button" <% if(sesion
+                        !==null) { %>
                         onclick="eliminarFavoritos(this)" <% } %>>
                             <i class="fa-solid fa-trash"></i>
                             <span class="mensaje">Eliminar de favoritos</span>
@@ -329,7 +340,8 @@
                     </button>
 
                     <button id="modal-proximamente__botones--eliminar-pendientes"
-                        class="boton__3 modal-proximamente__botones--eliminar pendientes" type="button" <% if(sesion !==null) { %>
+                        class="boton__3 modal-proximamente__botones--eliminar pendientes" type="button" <% if(sesion
+                        !==null) { %>
                         onclick="eliminarPendientes(this)" <% } %>>
                             <i class="fa-solid fa-trash"></i>
                             <span class="mensaje">Eliminar de pendientes</span>
@@ -337,14 +349,14 @@
 
                     <% if (sesion===null) { %>
                         <style>
-                            .modal-proximamente__botones > button {
+                            .modal-proximamente__botones>button {
                                 background-color: gray;
                             }
                         </style>
                         <% } %>
 
                             <style>
-                                .modal-proximamente__botones > button {
+                                .modal-proximamente__botones>button {
                                     position: relative;
                                     display: flex;
                                     justify-content: center;
@@ -369,7 +381,7 @@
                                     cursor: default;
                                 }
 
-                                .modal-proximamente__botones > button:hover .mensaje {
+                                .modal-proximamente__botones>button:hover .mensaje {
                                     visibility: visible;
                                     opacity: 1;
                                 }
@@ -379,13 +391,43 @@
         </div>
     </section>
 
-    <section id="loader" class="dots-container">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-    </section>
+    <% if (administrador) { %>
+        <section id="modal-usuarios" class="modal__fondo"
+            onclick="cerrarModal('modal-usuarios', 'modal-usuarios__contenido')">
+
+            <div id="modal-usuarios__contenido" class="modal__contenido modal__contenido--usuarios"
+                onclick="event.stopPropagation()">
+                <button class="boton__2 modal__cerrar" type="button"
+                    onclick="cerrarModal('modal-usuarios', 'modal-usuarios__contenido')">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+                <h2 id="modal-usuarios__titulo">Usuarios</h2>
+                <span>Usuarios registrados actualmente en la plataforma</span>
+
+                <!-- Tabla de usuarios -->
+                <table id="tabla-usuarios">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Correo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aquí se van a agregar las filas dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <% } %>
+
+            <section id="loader" class="dots-container">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </section>
 </body>
 
 </html>

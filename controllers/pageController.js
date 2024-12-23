@@ -3,12 +3,15 @@ const movieSevice = require("../services/movieService");
 
 const inicio = async (req, res) => {
   let usuario = null;
+  let administrador = false;
   let favoritos = [];
   let pendientes = [];
   
   if (req.session.idUsuario) {
     try {
       const resultado = await authService.consultarExistenciaUsuario(req.session.idUsuario);
+      administrador = await authService.consultarAdministrador(req.session.idUsuario);
+
       favoritos = await movieSevice.consultarPeliculasFavoritos(req.session.idUsuario);
       pendientes = await movieSevice.consultarPeliculasPendientes(req.session.idUsuario);
 
@@ -45,6 +48,7 @@ const inicio = async (req, res) => {
       title: "Inicio",
       sesion: req.session.idUsuario,
       usuario: usuario,
+      administrador: administrador,
       favoritos: favoritos,
       pendientes: pendientes,
       populares: dataPopular.results,
