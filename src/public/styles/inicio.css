@@ -467,6 +467,11 @@ h3 {
   transition: transform 0.3s ease;
   margin-bottom: 20px;
   transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.populares__pelicula span {
+  cursor: pointer;
 }
 
 .populares__pelicula--titulo {
